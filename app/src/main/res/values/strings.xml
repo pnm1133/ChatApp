@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">FriendApp</string>
+    <string name="todo">TODO</string>
+    <string name="hint_email">Email</string>
+    <string name="password">Password</string>
+    <string name="error_email_null">Email không được để trống</string>
+    <string name="error_email_badly_format">Email phải có dạng Example@gmail.com</string>
+    <string name="error_password_null">Password không được để trống</string>
+    <string name="error_email_format">The email address is badly formatted.</string>
+    <string name="error_email_nul_record">There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="error_password_invalid">The password is invalid or the user does not have a password.</string>
+    <string name="error_password_badly_format">Password phải có ít nhất 1 chữ hoa va 1 chữ thường</string>
+    <string name="OK">OK</string>
+    <string name="get_started">Get Started</string>
+    <string name="username">UserName</string>
+    <string name="cb_condition">agree with conditions</string>
+    <string name="tv_avatar">Add avatar</string>
+
+    <string-array name="array_firebase_response">
+        <item>The email address is badly formatted.</item>
+        <item>There is no user record corresponding to this identifier. The user may have been deleted.</item>
+        <item>The password is invalid or the user does not have a password.</item>
+    </string-array>
+    <string name="title_activity_message_list">MessageList</string>
+
+</resources>

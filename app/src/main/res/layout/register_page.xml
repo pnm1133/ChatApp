@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
+    android:id="@+id/container"
+    >
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_avatar"
+        app:fabCustomSize="30dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_account_circle_black_24dp"
+
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tv_avatar"
+        app:layout_constraintEnd_toStartOf="@+id/btn_avatar"
+        app:layout_constraintStart_toEndOf="@+id/btn_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/btn_avatar" />
+
+    <ImageButton
+        android:id="@+id/btn_close"
+        style="@style/Base.Widget.AppCompat.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/ripple_effect"
+        android:src="@drawable/ic_close_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        app:errorEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:errorTextAppearance="@style/TextInputHintText"
+        app:hintTextAppearance="@style/TextInputHintText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_avatar">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_email"
+            style="@style/FriendApp.EdtLogin"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:hint="@string/hint_email"
+            android:textCursorDrawable="@null" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        app:errorEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:errorTextAppearance="@style/TextInputHintText"
+        app:hintTextAppearance="@style/TextInputHintText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_input_email">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_username"
+            style="@style/FriendApp.EdtLogin"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:hint="@string/username"
+            android:textCursorDrawable="@null" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/text_input_password"
+        style="@style/AppTextInputLayout"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="52dp"
+        app:errorEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:errorTextAppearance="@style/TextInputHintText"
+        app:hintTextAppearance="@style/TextInputHintText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_input_username">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_password"
+            style="@style/FriendApp.EdtLogin"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_vpn_key_black_24dp"
+            android:hint="@string/password"
+            android:textCursorDrawable="@null" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/cb_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/cb_condition"
+        app:layout_constraintEnd_toEndOf="@+id/text_input_password"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/text_input_password"
+        app:layout_constraintTop_toTopOf="@+id/text_input_password" />
+
+    <Button
+        android:id="@+id/btn_get_started"
+        style="@style/FriendApp.BtnSignIn"
+        android:layout_width="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/btn_backgrond_ripper"
+        android:text="@string/get_started"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cb_condition"
+        app:layout_constraintVertical_bias="0.217" />
+
+
+</android.support.constraint.ConstraintLayout>
