@@ -27,6 +27,17 @@ android {
 
 dependencies {
 
+    implementation 'com.facebook.shimmer:shimmer:0.2.0'
+
+    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+
+    implementation 'com.google.code.gson:gson:2.8.4'
+
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+
     //crop image
     implementation 'com.github.yalantis:ucrop:2.2.2'
     //chat ui
@@ -54,6 +65,8 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.11'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'

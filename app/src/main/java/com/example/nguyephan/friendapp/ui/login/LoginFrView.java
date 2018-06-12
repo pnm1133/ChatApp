@@ -2,7 +2,7 @@ package com.example.nguyephan.friendapp.ui.login;
 
 import android.support.annotation.NonNull;
 
-import com.example.nguyephan.friendapp.data.pojo.firebase.FireRequestAuth;
+import com.example.nguyephan.friendapp.data.pojo.firebase.FireRequest;
 import com.example.nguyephan.friendapp.ui.base.BaseContract;
 
 /**
@@ -17,7 +17,7 @@ public interface LoginFrView extends BaseContract.View{
 
     void showErrorPassword(@NonNull String error);
 
-    FireRequestAuth getFirebaseRequest();
+    FireRequest getFirebaseRequest();
 
 
 }

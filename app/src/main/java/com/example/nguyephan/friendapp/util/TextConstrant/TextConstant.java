@@ -18,6 +18,8 @@ public class TextConstant {
     public static final String ERROR_NULL_RECORD = "There is no user record corresponding to this identifier. The user may have been deleted.";
     public static final String ERROR_WRONG_INVALID = "The password is invalid or the user does not have a password.";
     public static final String ERROR_NULL_NAME= "UserName không được trống";
+    public static final String ERROR_EMAIL_REGISTER = "com.google.firebase.auth.FirebaseAuthUserCollisionException: The email address is already in use by another account.";
+    public static final String ERROR_EMAIL_REGISTER_VIE = "email da ton tai";
 
     public static boolean regexEmail(String email){
         String emailPattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";

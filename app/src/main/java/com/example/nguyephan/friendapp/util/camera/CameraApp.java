@@ -24,6 +24,7 @@ import java.util.Date;
 public class CameraApp {
 
     private final static String APP_TAG = "FriendsApp";
+    private static final String TAG = CameraApp.class.getSimpleName();
     private String photoFileName = "photo.jpg";
     private File photoFile;
     private AppCompatActivity context;
@@ -33,6 +34,7 @@ public class CameraApp {
     }
 
     void onLaunchCamera(Fragment fragment) throws IOException {
+        Log.e(TAG,"onLaunchCamera");
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri();
         Uri fileProvider =
