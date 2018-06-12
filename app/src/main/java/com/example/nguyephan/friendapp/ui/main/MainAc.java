@@ -20,6 +20,7 @@ import com.example.nguyephan.friendapp.ui.base.BaseAc;
 import com.example.nguyephan.friendapp.ui.chat.ChatAc;
 import com.example.nguyephan.friendapp.ui.login.LoginFr;
 import com.example.nguyephan.friendapp.ui.login.RegisterFr;
+import com.example.nguyephan.friendapp.util.navigation.Navigation;
 import com.example.nguyephan.friendapp.util.page.Page;
 
 import javax.inject.Inject;
@@ -39,6 +40,8 @@ public class MainAc extends BaseAc implements MainContract.View,LoginFr.OnLoginF
     public LoginFr mLoginFr;
     @Inject
     public RegisterFr mRegisterFr;
+    @Inject
+    public Navigation mNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +57,8 @@ public class MainAc extends BaseAc implements MainContract.View,LoginFr.OnLoginF
         }else {
             presenter = mainModel.getPresenter();
         }
-
         presenter.onAttach(this);
-
         presenter.checkUserLogin();
-
     }
 
     @Override
@@ -91,9 +91,9 @@ public class MainAc extends BaseAc implements MainContract.View,LoginFr.OnLoginF
     }
 
     @Override
-    public void replaceStartPage() {
-        Intent intent = new Intent(this, ChatAc.class);
-        startActivity(intent);
+    public void replaceChatPage() {
+        mNavigation.startChatAc(null,null);
+        finish();
     }
 
     @Override
@@ -136,6 +136,12 @@ public class MainAc extends BaseAc implements MainContract.View,LoginFr.OnLoginF
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override

@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +18,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nguyephan.friendapp.R;
-import com.example.nguyephan.friendapp.data.pojo.firebase.FireRequestAuth;
+import com.example.nguyephan.friendapp.data.pojo.firebase.FireRequest;
+import com.example.nguyephan.friendapp.service.ConnectRemoteJobRegister;
 import com.example.nguyephan.friendapp.ui.base.BaseFr;
 import com.example.nguyephan.friendapp.ui.main.MainAc;
 import com.example.nguyephan.friendapp.ui.main.MainContract;
@@ -29,9 +31,13 @@ import com.example.nguyephan.friendapp.util.GlideApp;
 import com.example.nguyephan.friendapp.util.camera.CameraBuilder;
 import com.example.nguyephan.friendapp.util.camera.GalleryCameraApp;
 import com.example.nguyephan.friendapp.util.view.FontView;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.Job;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.yalantis.ucrop.UCrop;
 
-import java.io.IOException;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +50,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class RegisterFr extends BaseFr
-        implements RegisterFrView ,View.OnClickListener{
+        implements RegisterFrView, View.OnClickListener {
 
     private static final String TAG = "RegisterFr";
 
@@ -77,37 +83,62 @@ public class RegisterFr extends BaseFr
 
     private MainContract.Presenter<MainContract.View> presenter;
     private Unbinder unbinder;
-    private FireRequestAuth fireRequestAuth = FireRequestAuth.getInStance();
+    private Uri uriAvatar;
+    private FireRequest fireRequest;
+    @Inject
+    FirebaseJobDispatcher dispatcher;
+
+    /*this is primary actions of register page*/
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_get_started:
+                if(mCbCondition.isChecked()){
+                    getStarted();
+                }else {
+                    Toast.makeText(getContext(), R.string.error_condition_checkbox_register,Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.btn_avatar:
+                setAvatar();
+                break;
+            case R.id.btn_close:
+                listener.closeRegisterPage();
+                break;
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             if (requestCode == CameraBuilder.REQUEST_CODE_CAPTURE) {
                 GalleryCameraApp
-                        .builder(getContext(),GalleryCameraApp.JPG_FORMAT)
+                        .builder(getContext(), GalleryCameraApp.JPG_FORMAT)
                         .startCrop(CameraBuilder.getUriPicture());
-            }else if(requestCode == GalleryCameraApp.REQUEST_MODE){
-                Uri uri = UCrop.getOutput(data);
+            } else if (requestCode == GalleryCameraApp.REQUEST_MODE) {
+                uriAvatar = UCrop.getOutput(data);
                 GlideApp.with(this)
-                        .load(uri)
+                        .load(uriAvatar)
                         .centerCrop()
                         .circleCrop()
                         .into(mBtnAddAvatar);
+            }else {
+                Toast.makeText(getContext(), R.string.error_crop,Toast.LENGTH_LONG).show();
             }
-
+        }else {
+            Toast.makeText(getContext(), R.string.error_capture_failed,Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try{
+        try {
             listener = (OnRegisterFrListener) context;
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + getString(R.string.error_attach_fragment));
         }
     }
 
@@ -122,9 +153,9 @@ public class RegisterFr extends BaseFr
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.register_page,container,false);
-        if(getActivity() instanceof MainAc){
-            unbinder = ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.register_page, container, false);
+        if (getActivity() instanceof MainAc) {
+            unbinder = ButterKnife.bind(this, view);
             getActivityComponent().inject(this);
             MainModel mainModel = ViewModelProviders.of(getActivity()).get(MainModel.class);
             presenter = mainModel.getPresenter();
@@ -136,8 +167,10 @@ public class RegisterFr extends BaseFr
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FontView.setFontFamilyTextView(getContext(),mTvAvatar,mEdtEmail,mEdtPassword,mEdtUsername,mBtnGetStarted,mCbCondition);
-        FontView.setFontFamilyTextInputLayout(getActivity(),mTextInputEmail,mTextInputPassword,mTextInputUsername);
+        FontView.setFontFamilyTextView(
+                        getContext(), mTvAvatar, mEdtEmail, mEdtPassword, mEdtUsername, mBtnGetStarted, mCbCondition);
+        FontView.setFontFamilyTextInputLayout(
+                        getActivity(), mTextInputEmail, mTextInputPassword, mTextInputUsername);
 
         //show keyboard fist
         mEdtEmail.requestFocus();
@@ -150,29 +183,15 @@ public class RegisterFr extends BaseFr
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn_get_started:
-                getStarted();
-                break;
-            case R.id.btn_avatar:
-                try {
-                    setAvatar();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.btn_close:
-                listener.closeRegisterPage();
-                break;
-        }
-    }
-
-    @Override
     public void showErrorEmail(@NonNull String error) {
         mEdtEmail.setError(error);
         mEdtEmail.requestFocus();
         showKeyboard();
+    }
+
+    @Override
+    public void showErrorUnknown(String error) {
+        Toast.makeText(getContext(), R.string.error_unknown,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -190,30 +209,50 @@ public class RegisterFr extends BaseFr
     }
 
     @Override
-    public void setAvatar() throws IOException {
-        //start camera
+    public void setAvatar() {
         CameraBuilder
                 .build()
-                .onLunchCamera(this,getContext());
-        // get results in onActivityResults()
-
-//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-//        startActivityForResult(intent,3);
-
+                .onLunchCamera(this, getContext());
     }
 
     @Override
     public void getStarted() {
-        //send firebaseRequest Authory to firebase server
-        fireRequestAuth.setEmail(mEdtEmail.getText().toString());
-        fireRequestAuth.setUserName(mEdtUsername.getText().toString());
-        fireRequestAuth.setPassword(mEdtPassword.getText().toString());
-        try {
-            fireRequestAuth.setUriAvatar(CameraBuilder.getUriPicture());
-        }catch (Error error){
-            Log.e(TAG,error.toString());
+        String email = mEdtEmail.getText().toString();
+        String userName = mEdtUsername.getText().toString();
+        String password = mEdtPassword.getText().toString();
+        fireRequest = FireRequest.getInStance(email,password,userName,null);
+        if(uriAvatar != null){
+            fireRequest.setUriAvatar(uriAvatar.toString());
         }
-        presenter.startRegister(fireRequestAuth);
+        presenter.startRegister(fireRequest);
+    }
+
+    @Override
+    public void showChatPage() {
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if(activity instanceof MainAc){
+            ((MainAc) activity).replaceChatPage();
+        }
+    }
+
+    @Override
+    public void startUploadService() {
+        Bundle bundle = new Bundle();
+        Gson gson = new GsonBuilder().create();
+        String jsonFirebaseRequest = gson.toJson(fireRequest);
+        bundle.putString(String.valueOf(R.string.firebaseRequest_key),jsonFirebaseRequest);
+        Job myJob = dispatcher.newJobBuilder()
+                .setService(ConnectRemoteJobRegister.class)
+                .setTag(getContext().getString(R.string.firebase_storage_job_service_tag))
+                .setRecurring(false)
+                .setExtras(bundle)
+                .build();
+        dispatcher.mustSchedule(myJob);
+    }
+
+    @Override
+    public void startSaveInforUser() {
+
     }
 
     private OnRegisterFrListener listener;
@@ -222,7 +261,7 @@ public class RegisterFr extends BaseFr
         void closeRegisterPage();
     }
 
-    public void setRegisterFrListener(OnRegisterFrListener registerFrListener){
+    public void setRegisterFrListener(OnRegisterFrListener registerFrListener) {
         this.listener = registerFrListener;
     }
 

@@ -2,8 +2,8 @@ package com.example.nguyephan.friendapp.di.Module;
 
 import com.example.nguyephan.friendapp.data.repository.DataManager;
 import com.example.nguyephan.friendapp.data.repository.DataManagerApp;
-import com.example.nguyephan.friendapp.data.repository.prefs.PreferenceApp;
-import com.example.nguyephan.friendapp.data.repository.prefs.Preferences;
+import com.example.nguyephan.friendapp.data.repository.Pres;
+import com.example.nguyephan.friendapp.data.repository.PresLocalIMP;
 
 import javax.inject.Singleton;
 
@@ -19,8 +19,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    Preferences providesPreference(PreferenceApp preferenceApp){
-        return preferenceApp;
+    Pres providesPreference(PresLocalIMP presLocalIMP){
+        return presLocalIMP;
     }
 
     @Provides

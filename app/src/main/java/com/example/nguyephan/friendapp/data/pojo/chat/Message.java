@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by nguye phan on 5/16/2018.
  */
 
-public class Message implements IMessage,MessageContentType.Image,MessageContentType{
+public class Message implements IMessage, MessageContentType.Image, MessageContentType {
 
     private String id;
 
@@ -20,9 +20,44 @@ public class Message implements IMessage,MessageContentType.Image,MessageContent
 
     private User user;
 
+    private String status;
+
+    private String type;
+
+    private String senderId;
+
     private Image image;
 
     private Voice voice;
+
+
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Message() {
+    }
 
     public Message(String id, User user, String text, Date createdAt) {
         this.id = id;
@@ -63,6 +98,10 @@ public class Message implements IMessage,MessageContentType.Image,MessageContent
 
     public String getStatus() {
         return "Sent";
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Voice getVoice() {

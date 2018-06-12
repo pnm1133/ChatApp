@@ -5,6 +5,8 @@ import com.example.nguyephan.friendapp.di.Module.AcModule;
 import com.example.nguyephan.friendapp.di.Module.FrModule;
 import com.example.nguyephan.friendapp.di.Module.GoogleModule;
 import com.example.nguyephan.friendapp.ui.chat.ChatAc;
+import com.example.nguyephan.friendapp.ui.chat.message_ac.MessageAc;
+import com.example.nguyephan.friendapp.ui.chat.message_fr.DialogChatFr;
 import com.example.nguyephan.friendapp.ui.login.LoginFr;
 import com.example.nguyephan.friendapp.ui.login.RegisterFr;
 import com.example.nguyephan.friendapp.ui.login.RegisterFrView;
@@ -26,5 +28,9 @@ public interface AcComponent {
     void inject(RegisterFr registerFr);
 
     void inject(ChatAc chatAc);
+
+    void inject(DialogChatFr dialogChatFr);
+
+    void inject(MessageAc messageAc);
 
 }

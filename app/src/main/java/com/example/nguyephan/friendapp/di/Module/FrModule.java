@@ -1,6 +1,8 @@
 package com.example.nguyephan.friendapp.di.Module;
 
 import com.example.nguyephan.friendapp.di.AcScope;
+import com.example.nguyephan.friendapp.ui.chat.message_fr.DialogChatContract;
+import com.example.nguyephan.friendapp.ui.chat.message_fr.DialogChatFrPresenter;
 import com.example.nguyephan.friendapp.ui.login.LoginFr;
 import com.example.nguyephan.friendapp.ui.login.LoginFrView;
 import com.example.nguyephan.friendapp.ui.login.RegisterFr;
@@ -38,6 +40,12 @@ public class FrModule {
     @AcScope
     RegisterFrView provideRegisterFrView(RegisterFr registerFr){
         return registerFr;
+    }
+
+    @Provides
+    @AcScope
+    DialogChatContract.presenter<DialogChatContract.view>  provideDialogChatFrView(DialogChatFrPresenter<DialogChatContract.view> dialogChatFrPresenter){
+        return dialogChatFrPresenter;
     }
     
     

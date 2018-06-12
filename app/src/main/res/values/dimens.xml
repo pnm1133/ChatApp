@@ -1,3 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="actionbar_size">56dp</dimen>
+    <dimen name="margin_dialog_chat">8dp</dimen>
+    <dimen name="margin_register">8dp</dimen>
+    <dimen name="margin_register_24">24dp</dimen>
 </resources>

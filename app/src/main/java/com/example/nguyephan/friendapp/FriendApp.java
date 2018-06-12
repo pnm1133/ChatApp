@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.example.nguyephan.friendapp.di.Component.AppComponent;
+
 import com.example.nguyephan.friendapp.di.Component.DaggerAppComponent;
 import com.example.nguyephan.friendapp.di.Module.ApiModule;
 import com.example.nguyephan.friendapp.di.Module.AppModule;
@@ -33,7 +34,8 @@ public class FriendApp extends Application {
     }
 
     private AppComponent buildAppComponent(){
-        return DaggerAppComponent.builder().appModule(new AppModule(this))
+        return DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
                 .repositoryModule(new RepositoryModule())
                 .apiModule(new ApiModule())
                 .build();

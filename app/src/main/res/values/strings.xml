@@ -22,5 +22,13 @@
         <item>The password is invalid or the user does not have a password.</item>
     </string-array>
     <string name="title_activity_message_list">MessageList</string>
+    <string name="error_capture_failed">capture failed</string>
+    <string name="error_attach_fragment">must implement OnHeadlineSelectedListener</string>
+    <string name="error_crop">crop image failed, please try again</string>
+    <string name="error_unknown">co loi xay ra trong qua trinh tao user</string>
+    <string name="error_condition_checkbox_register">ban chua dong y voi dieu khoan</string>
+    <string name="firebaseRequest_key">firebaseRequest</string>
+    <string name="firebase_storage_job_service_tag">connectStorage</string>
+    <string name="firebase_cloud_function_http">https://us-central1-android-code-lab.cloudfunctions.net/</string>
 
 </resources>

@@ -5,7 +5,7 @@ package com.example.nguyephan.friendapp.util.page;
  */
 
 public enum Page {
-    Login("Login"),Register("Register"),LoadDialog("LoadingDialog");
+    Login("Login"),Register("Register"),LoadDialog("LoadingDialog"),ManAc("Main");
     String tag;
     Page(String tag){
         this.tag = tag;

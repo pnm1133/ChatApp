@@ -15,6 +15,8 @@ public interface RegisterFrView extends BaseContract.View {
 
     void showErrorEmail(@NonNull String error);
 
+    void showErrorUnknown(String error);
+
     void showErrorPassword(@NonNull String error);
 
     void showErrorName(@NonNull String error);
@@ -22,5 +24,11 @@ public interface RegisterFrView extends BaseContract.View {
     void setAvatar() throws IOException;
 
     void getStarted();
+
+    void showChatPage();
+
+    void startUploadService();
+
+    void startSaveInforUser();
     
 }

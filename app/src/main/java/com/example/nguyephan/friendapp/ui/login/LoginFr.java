@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +18,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.nguyephan.friendapp.R;
-import com.example.nguyephan.friendapp.data.pojo.firebase.FireRequestAuth;
+import com.example.nguyephan.friendapp.data.pojo.firebase.FireRequest;
 import com.example.nguyephan.friendapp.ui.base.BaseFr;
 import com.example.nguyephan.friendapp.ui.chat.ChatAc;
 import com.example.nguyephan.friendapp.ui.main.MainAc;
 import com.example.nguyephan.friendapp.ui.main.MainContract;
 import com.example.nguyephan.friendapp.ui.main.MainModel;
 import com.example.nguyephan.friendapp.util.view.FontView;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +63,24 @@ public class LoginFr extends BaseFr
 
     public static LoginFr getInstance() {
         return new LoginFr();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_get_started:
+                presenter.startLogin(getFirebaseRequest());
+                break;
+            case R.id.btn_facebook:
+                break;
+            case R.id.btn_twitter:
+                break;
+            case R.id.btn_google:
+                break;
+            case R.id.btn_new:
+                mOnLoginFrListener.onLoginNewAccListener();
+                break;
+        }
     }
 
     @Override
@@ -136,8 +157,10 @@ public class LoginFr extends BaseFr
 
     @Override
     public void showChatPage() {
-        Intent intent = new Intent(getActivity(), ChatAc.class);
-        startActivity(intent);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if(activity instanceof MainAc){
+            ((MainAc) activity).replaceChatPage();
+        }
     }
 
 
@@ -154,29 +177,10 @@ public class LoginFr extends BaseFr
     }
 
     @Override
-    public FireRequestAuth getFirebaseRequest() {
-        FireRequestAuth fireRequestAuth = FireRequestAuth.getInStance();
-        fireRequestAuth.setEmail(mTextInputEmail.getText().toString());
-        fireRequestAuth.setPassword(mTextInputPassword.getText().toString());
-        return fireRequestAuth;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_get_started:
-                presenter.startLogin(getFirebaseRequest());
-                break;
-            case R.id.btn_facebook:
-                break;
-            case R.id.btn_twitter:
-                break;
-            case R.id.btn_google:
-                break;
-            case R.id.btn_new:
-                mOnLoginFrListener.onLoginNewAccListener();
-                break;
-        }
+    public FireRequest getFirebaseRequest() {
+        String email = mTextInputEmail.getText().toString();
+        String password = mTextInputPassword.getText().toString();
+        return FireRequest.getInStance(email,password,null,null);
     }
 
     private OnLoginFrListener mOnLoginFrListener;

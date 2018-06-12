@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.yalantis.ucrop.UCrop;
 
@@ -34,6 +35,7 @@ public class CameraBuilder {
     }
 
     public static class CameraDefault extends CameraBuilder {
+        private static final String TAG = CameraDefault.class.getSimpleName();
         private CameraApp cameraApp;
 
         private CameraDefault(){
@@ -41,6 +43,7 @@ public class CameraBuilder {
         }
 
         public void onLunchCamera(Fragment fragment, Context context){
+            Log.e(TAG,"onLaunchCamera");
             cameraApp = new CameraApp(context);
             try {
                 cameraApp.onLaunchCamera(fragment);
@@ -61,8 +64,7 @@ public class CameraBuilder {
                 return null;
             }
 
-            Uri uri = Uri.fromFile(cameraApp.getPhotoFile());
-            return uri;
+            return Uri.fromFile(cameraApp.getPhotoFile());
         }
 
 

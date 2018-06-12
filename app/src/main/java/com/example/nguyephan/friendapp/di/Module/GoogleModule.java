@@ -3,9 +3,12 @@ package com.example.nguyephan.friendapp.di.Module;
 import com.example.nguyephan.friendapp.data.api.firebase.FCAuthConnect;
 import com.example.nguyephan.friendapp.data.api.firebase.FCAuthImp;
 import com.example.nguyephan.friendapp.data.api.firebase.FCFirestoreConnect;
-import com.example.nguyephan.friendapp.data.api.firebase.FCFirestoreImp;
+import com.example.nguyephan.friendapp.data.api.firebase.FCFirestoreConnectImp;
+import com.example.nguyephan.friendapp.data.api.firebase.FCManager;
+import com.example.nguyephan.friendapp.data.api.firebase.FCManagerIMP;
 import com.example.nguyephan.friendapp.data.api.firebase.FCStorageConnect;
 import com.example.nguyephan.friendapp.data.api.firebase.FCStorageConnectImp;
+import com.example.nguyephan.friendapp.di.AcContext;
 import com.example.nguyephan.friendapp.di.AcScope;
 
 import dagger.Module;
@@ -25,7 +28,7 @@ public class GoogleModule {
 
     @Provides
     @AcScope
-    FCFirestoreConnect provideFCFirestoreConnect(FCFirestoreImp mCFirestoreImp){
+    FCFirestoreConnect provideFCFirestoreConnect(FCFirestoreConnectImp mCFirestoreImp){
         return mCFirestoreImp;
     }
 
@@ -33,6 +36,12 @@ public class GoogleModule {
     @AcScope
     FCStorageConnect provideFCStorageConnect(FCStorageConnectImp mFCStorageConnect){
         return mFCStorageConnect;
+    }
+
+    @Provides
+    @AcScope
+    FCManager providesFCManager(FCManagerIMP fcManagerIMP){
+        return fcManagerIMP;
     }
 
 }
